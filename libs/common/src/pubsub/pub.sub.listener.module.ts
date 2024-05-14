@@ -3,6 +3,7 @@ import { DynamicModuleUtils } from '@mvx-monorepo/common/utils/dynamic.module.ut
 import { ApiConfigModule } from '../config/api.config.module';
 import { PubSubListenerController } from './pub.sub.listener.controller';
 import { LoggingModule } from '@multiversx/sdk-nestjs-common';
+import { ApiMetricsModule } from '@mvx-monorepo/common';
 
 @Module({})
 export class PubSubListenerModule {
@@ -12,6 +13,7 @@ export class PubSubListenerModule {
       imports: [
         LoggingModule,
         ApiConfigModule,
+        ApiMetricsModule,
         DynamicModuleUtils.getCachingModule(configuration),
       ],
       controllers: [

@@ -1,5 +1,71 @@
 version: '3.4'
+
 services:
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+      target: development
+    command: npm run start:devnet watch
+    depends_on:
+      - mongodb
+      - database
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+      - '3005:3005'
+      - '4000:4000'
+  cache-warmer:
+    build:
+      context: .
+      dockerfile: ./apps/cache-warmer/Dockerfile
+      target: development
+    command: npm run start:cache-warmer:devnet:watch
+    depends_on:
+      - mongodb
+      - database
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '5201:5201'
+
+  queue-worker:
+    build:
+      context: .
+      dockerfile: ./apps/queue-worker/Dockerfile
+      target: development
+    command: npm run start:queue-worker:devnet:watch
+    depends_on:
+      - mongodb
+      - database
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '8000:8000'
+
+  transactions-processor:
+    build:
+      context: .
+      dockerfile: ./apps/transactions-processor/Dockerfile
+      target: development
+    command: npm run start:transactions-processor:devnet:watch
+    depends_on:
+      - mongodb
+      - database
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '5202:5202'
+
   redis:
     image: "redis:alpine"
     command: redis-server
@@ -32,7 +98,7 @@ services:
       - 9090:9090
     extra_hosts:
       - host.docker.internal:host-gateway
-  
+
   grafana:
     depends_on:
       - prometheus

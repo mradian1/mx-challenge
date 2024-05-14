@@ -18,4 +18,8 @@ export class EventsGateway {
     this.logger.log(`Received onTest event with payload '${JSON.stringify(payload)}'`);
     this.webSocketServer?.emit('test', payload);
   }
+
+  onTransactionsReceived(payload: unknown) {
+    this.logger.log(`Received onTransaction event with payload '${JSON.stringify(payload)}'`);
+  }
 }
