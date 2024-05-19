@@ -27,4 +27,5 @@ COPY --from=development /usr/src/app/dist ./dist
 
 EXPOSE 8000
 
-CMD ["node", "dist/apps/queue-worker/main"]
+CMD ["node", "dist/apps/queue-worker/src/main"]
+#CMD ["npm", "run", "start:queue-worker:mainnet"]

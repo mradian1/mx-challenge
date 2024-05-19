@@ -30,35 +30,29 @@ export class ApiMetricsService {
   }
 
   async setTransactionsValue(shardId: number, totalValue: number) {
-    //updateMetrics(shardId: number, nonce: number) {
-    console.log(
-      `Setting transactions total value: Shard ID = ${shardId}, Value = ${totalValue}`,
-    );
-    await ApiMetricsService.transactionsValueGauge.set(
+    await ApiMetricsService.transactionsValueGauge.inc(
       { shardId: shardId.toString() },
-      totalValue,
+      totalValue
     );
-    const gaugeInfo = await ApiMetricsService.transactionsValueGauge.get();
-    const currentValue = gaugeInfo.values[0]?.value;
-    console.log(`Metric set successfully for Shard ID ${shardId} value: ${currentValue}`);
   }
+  async doNothing(){}
 
   async getMetrics(): Promise<string> {
     let baseMetrics: string;
     let currentMetrics: string;
-    let currentValue: number;
-  
+    let gaugeInfo;
+
     try {
       baseMetrics = await this.metricsService.getMetrics();
       currentMetrics = await register.metrics();
-      const gaugeInfo = await ApiMetricsService.transactionsValueGauge.get();
-      currentValue = gaugeInfo.values[0]?.value;
+      gaugeInfo = await ApiMetricsService.transactionsValueGauge.get();
+      ApiMetricsService.transactionsValueGauge.reset();
     } catch (exception) {
       console.log('Error retrieving metrics:', exception);
       return 'Error retrieving metrics';
     }
-  
-    console.log(`returning metrics - Transaction gauge value = ${currentValue}`);
+
+    console.log(`returning metrics - Transaction gauge value = ${JSON.stringify(gaugeInfo)}`);
     return baseMetrics + '\n' + currentMetrics;
   }
 }

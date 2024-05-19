@@ -5,15 +5,15 @@ services:
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
-      target: development
-    command: npm run start:devnet watch
+      target: production
+    command: npm run start:mainnet
     depends_on:
       - mongodb
       - database
       - redis
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      #- /usr/src/app/node_modules
     ports:
       - '3000:3000'
       - '3005:3005'
@@ -22,15 +22,15 @@ services:
     build:
       context: .
       dockerfile: ./apps/cache-warmer/Dockerfile
-      target: development
-    command: npm run start:cache-warmer:devnet:watch
+      target: production
+    command: npm run start:cache-warmer:mainnet
     depends_on:
       - mongodb
       - database
       - redis
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      #- /usr/src/app/node_modules
     ports:
       - '5201:5201'
 
@@ -38,15 +38,15 @@ services:
     build:
       context: .
       dockerfile: ./apps/queue-worker/Dockerfile
-      target: development
-    command: npm run start:queue-worker:devnet:watch
+      target: production
+    command: npm run start:queue-worker:mainnet
     depends_on:
       - mongodb
       - database
       - redis
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      #- /usr/src/app/node_modules
     ports:
       - '8000:8000'
 
@@ -54,15 +54,15 @@ services:
     build:
       context: .
       dockerfile: ./apps/transactions-processor/Dockerfile
-      target: development
-    command: npm run start:transactions-processor:devnet:watch
+      target: production
+    command: npm run start:transactions-processor:mainnet
     depends_on:
       - mongodb
       - database
       - redis
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      #- /usr/src/app/node_modules
     ports:
       - '5202:5202'
 

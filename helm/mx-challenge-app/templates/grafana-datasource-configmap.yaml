@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasource
+  labels:
+    app: grafana
+data:
+  prometheus.yaml: |
+    apiVersion: 1
+    datasources:
+    - name: 'Prometheus'
+      type: 'prometheus'
+      access: 'proxy'
+      url: 'http://mx-challenge-app-prometheus-server:9090'
+      isDefault: true

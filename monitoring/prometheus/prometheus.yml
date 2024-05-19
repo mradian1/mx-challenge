@@ -1,6 +1,7 @@
 global:
   evaluation_interval: 6s # defaults to 1m.
   scrape_interval: 6s # defaults to 1m.
+  scrape_timeout: 6s
   # scrape_timeout defaults to 10s.
 
 scrape_configs:

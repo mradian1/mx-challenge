@@ -24,6 +24,8 @@ export class ApiConfigService {
   }
 
   getRedisUrl(): string {
+    if(process.env.REDIS_URL)
+      return process.env.REDIS_URL;
     const redisUrl = this.configService.get<string>('urls.redis');
     if (!redisUrl) {
       throw new Error('No redisUrl present');
@@ -50,6 +52,8 @@ export class ApiConfigService {
   }
 
   getDatabaseHost(): string {
+    if(process.env.DATABASE_HOST)
+      return process.env.DATABASE_HOST;
     const databaseHost = this.configService.get<string>('database.host');
     if (!databaseHost) {
       throw new Error('No database.host present');
@@ -111,10 +115,19 @@ export class ApiConfigService {
       database: this.getDatabaseName(),
     };
   }
+  getNoSqlHost(){
+    if(process.env.NOSQL_HOST)
+      return process.env.NOSQL_HOST;
+    const nosqlHost = this.configService.get<string>('nosql.host');
+    if (!nosqlHost) {
+      throw new Error('No database.host present');
+    }
+    return nosqlHost;
+  }
 
   getNoSQLDatabaseConnection(): string {
-    //return `mongodb://${this.getDatabaseHost()}:27017/${this.getDatabaseName()}`;
-    return `mongodb://mongodb:27017/${this.getDatabaseName()}`;
+    return `mongodb://${this.getNoSqlHost()}:27017/${this.getDatabaseName()}`;
+    //return `mongodb://mongodb:27017/$moi{this.getDatabaseName()}`;
   }
 
   getIsPublicApiFeatureActive(): boolean {

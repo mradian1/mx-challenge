@@ -27,4 +27,5 @@ COPY --from=development /usr/src/app/dist ./dist
 
 EXPOSE 5201
 
-CMD ["node", "dist/apps/cache-warmer/main"]
+CMD ["node", "dist/apps/cache-warmer/src/main"]
+#CMD ["npm", "run", "start:cache-warmer:mainnet"]

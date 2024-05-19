@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue-worker
+  template:
+    metadata:
+      labels:
+        app: queue-worker
+    spec:
+      containers:
+        - name: queue-worker
+          image: mradian/mx-challenge-app_queue-worker
+          ports:
+            - containerPort: 8000
+          env:
+            - name: NODE_ENV
+              value: 'production'
+            - name: NOSQL_HOST
+              value: mx-challenge-app-mongodb
+            - name: DATABASE_HOST
+              value: mx-challenge-app-mysql
+            - name: REDIS_URL
+              value: mx-challenge-app-redis-headless

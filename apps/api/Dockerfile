@@ -29,6 +29,4 @@ EXPOSE 3000
 EXPOSE 3005
 EXPOSE 4000
 
-CMD ["node", "dist/apps/api/main"]
-
-
+CMD ["node", "dist/apps/api/src/main"]

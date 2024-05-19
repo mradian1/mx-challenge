@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactions-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactions-processor
+  template:
+    metadata:
+      labels:
+        app: transactions-processor
+    spec:
+      containers:
+        - name: transactions-processor
+          image: mradian/mx-challenge-app_transactions-processor
+          ports:
+            - containerPort: 5202
+          env:
+            - name: NODE_ENV
+              value: 'production'
+            - name: NOSQL_HOST
+              value: mx-challenge-app-mongodb
+            - name: DATABASE_HOST
+              value: mx-challenge-app-mysql
+            - name: REDIS_URL
+              value: mx-challenge-app-redis-headless

@@ -1,5 +1,14 @@
   REST API facade template for microservices that interacts with the MultiversX blockchain.
 
+## Changes made
+
+1. Transaction-processor: onTransactionReceived emits an event that communicates the shard_id and transactions value
+2. PubSub: added event route for transactions, that passes the values received to the ApiMetrics
+3. ApiMetrics: added a transactions gauge and its set function. getMetrics will reset the gauge in order not to persist old data when no transactions are received for that shard.
+4. Config: added host settings for mongodb and respective get function in order to be able to set it independently in deployment mode.
+   Also added the possibility to read all relevant config values from env variables, as they are passed as such in deployment mode
+5. Deployment (work in progress) executed through helm charts. Grafana doesn't, as yet, load json file for predefined dashboard, but data can be visualised by creating a new dashboard.
+
 ## Quick start
 
 1. Run `npm install` in the project directory
@@ -106,7 +115,7 @@ $ npm run start:queue-worker:devnet
 $ npm run start:queue-worker:mainnet
 ```
 
-Requests can be made to http://localhost:3001 for the api. The app will reload when you'll make edits (if opened in watch mode). You will also see any lint errors in the console.​
+Requests can be made to <http://localhost:3001> for the api. The app will reload when you'll make edits (if opened in watch mode). You will also see any lint errors in the console.​
 
 ### `npm run test`
 

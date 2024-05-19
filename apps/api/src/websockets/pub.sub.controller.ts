@@ -17,9 +17,4 @@ export class PubSubController {
     this.logger.log(`Notifying onTest with payload '${JSON.stringify(payload)}'`);
     this.eventsGateway.onTest(payload);
   }
-  @EventPattern('onTransactions')
-  onTransactionsReceived(payload: unknown) {
-    this.logger.log(`Notifying onTransactionsReceived with payload '${JSON.stringify(payload)}'`);
-    this.eventsGateway.onTransactionsReceived(payload);
-  }
 }

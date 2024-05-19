@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cache-warmer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cache-warmer
+  template:
+    metadata:
+      labels:
+        app: cache-warmer
+    spec:
+      containers:
+        - name: cache-warmer
+          image: mradian/mx-challenge-app_cache-warmer
+          ports:
+            - containerPort: 5201
+          env:
+            - name: NODE_ENV
+              value: 'production'
+            - name: NOSQL_HOST
+              value: mx-challenge-app-mongodb
+            - name: DATABASE_HOST
+              value: mx-challenge-app-mysql
+            - name: REDIS_URL
+              value: mx-challenge-app-redis-headless

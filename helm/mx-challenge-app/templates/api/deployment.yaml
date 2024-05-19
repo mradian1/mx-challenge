@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: /metrics
+        prometheus.io/port: '4000'
+    spec:
+      containers:
+        - name: api
+          image: mradian/mx-challenge-app_api
+          ports:
+            - containerPort: 3000
+            - containerPort: 3005
+            - containerPort: 4000
+          env:
+            - name: NODE_ENV
+              value: 'production'
+            - name: MONGODB_URI
+            - name: NODE_ENV
+              value: 'production'
+            - name: NOSQL_HOST
+              value: mx-challenge-app-mongodb
+            - name: DATABASE_HOST
+              value: mx-challenge-app-mysql
+            - name: REDIS_URL
+              value: mx-challenge-app-redis-headless
+

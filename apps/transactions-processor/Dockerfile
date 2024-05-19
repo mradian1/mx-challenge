@@ -27,4 +27,5 @@ COPY --from=development /usr/src/app/dist ./dist
 
 EXPOSE 5202
 
-CMD ["node", "dist/apps/transactions-processor/main"]
+CMD ["node", "dist/apps/transactions-processor/src/main"]
+#CMD ["npm", "run", "start:transactions-processor:mainnet"]
