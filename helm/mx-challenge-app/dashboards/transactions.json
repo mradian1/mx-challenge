@@ -24,7 +24,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "edm4w08oxb56of"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -39,7 +39,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "bars",
-            "fillOpacity": 18,
+            "fillOpacity": 11,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -97,7 +97,7 @@
         ]
       },
       "gridPos": {
-        "h": 17,
+        "h": 19,
         "w": 22,
         "x": 0,
         "y": 0
@@ -119,7 +119,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "edm4w08oxb56of"
+            "uid": "PBFA97CFB590B2093"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -133,7 +133,7 @@
           "useBackend": false
         }
       ],
-      "title": "Transactions [6s]",
+      "title": "Panel Title",
       "transformations": [
         {
           "id": "calculateField",
@@ -150,13 +150,13 @@
     "list": []
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "transactions",
-  "uid": "ddm4xlmzwit4we",
+  "title": "Transactions",
+  "uid": "adm85vxn5hdkwf",
   "version": 1,
   "weekStart": ""
 }

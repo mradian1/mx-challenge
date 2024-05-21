@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  labels:
+    app: grafana
+    grafana_dashboard: "1"
+data:
+  transactions.json:  |
+{{ .Files.Get "dashboards/transactions.json" | indent 4 }}
+  template_service_dashboard.json: |
+{{ .Files.Get "dashboards/template_service_dashboard.json" | indent 4 }}

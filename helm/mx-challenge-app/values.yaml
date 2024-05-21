@@ -1,3 +1,20 @@
+apiVersion: v1
+kind: Config
+
+urls:
+  api: 'https://api.multiversx.com'
+  swagger:
+    - 'https://microservice.multiversx.com'
+    - 'https://devnet-microservice.multiversx.com'
+    - 'https://testnet-microservice.multiversx.com'
+  redis: 'mx-challenge-app-redis-headless'
+database:
+  host: 'mx-challenge-app-mysql-headless'
+  port: 3306
+  username: 'root'
+  password: 'root'
+  name: 'example'
+
 redis:
   architecture: standalone
   image:
@@ -29,6 +46,7 @@ prometheus:
     enabled: false
   nodeExporter:
     enabled: false
+  
   server:
     global:
       scrape_interval: 6s
@@ -39,12 +57,18 @@ prometheus:
         metrics_path: /metrics
         static_configs:
           - targets: ['api:4000']
+    service:
+      type: LoadBalancer
+      servicePort: 9090
 
 grafana:
   service:
-    type: NodePort
+    type: LoadBalancer
+    port: 3010
+    targetPort: 3000
   adminUser: admin
   adminPassword: admin
+
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
@@ -56,11 +80,10 @@ grafana:
           disableDeletion: false
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/default
-  dashboards:
-    default:
-      transactions-dashboard:
-        file: /var/lib/grafana/dashboards/default/transactions-dashboard.json
+            path: '/var/lib/grafana/dashboards/default'
+  dashboardsConfigMaps:
+    default: "grafana-dashboards"
+  
   datasources:
     prometheus.yaml:
       apiVersion: 1
@@ -68,19 +91,5 @@ grafana:
         - name: 'Prometheus'
           type: 'prometheus'
           access: 'proxy'
-          url: 'http://mx-challenge-app-prometheus-server'
+          url: 'http://mx-challenge-app-prometheus-server:9090'
           isDefault: true
-
-urls:
-  api: 'https://api.multiversx.com'
-  swagger:
-    - 'https://microservice.multiversx.com'
-    - 'https://devnet-microservice.multiversx.com'
-    - 'https://testnet-microservice.multiversx.com'
-  redis: 'mx-challenge-app-redis-headless'
-database:
-  host: 'mx-challenge-app-mysql-headless'
-  port: 3306
-  username: 'root'
-  password: 'root'
-  name: 'example'
