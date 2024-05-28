@@ -12,12 +12,13 @@ v1
 5. Deployment (work in progress) executed through helm charts. Grafana doesn't, as yet, load json file for predefined dashboard, but data can be visualised by creating a new dashboard.
 
 v2
-6. Added api url in swagger url options in order to be able to test api routes
-7. Modified TransactionProcessor:
+6. Modified TransactionProcessor:
    a. value is now expressed in egld
    b. cross shard transactions (sourceShard is not current shard) are ignored in order to avoid doubling the data.
    c. transaction processor is imported from the mradian1/sdk-transaction-processor repository - branch timestamp, which now provides timestamp and round as parameters to onTransactionReceived
-8. Modified getMetrics - clearGauge() function resets gauge values to 0, instead of reset() which resets Gauge values to undefined
+7. Modified getMetrics - clearGauge() function resets gauge values to 0, instead of reset() which resets Gauge values to undefined
+8. New Gauge with labels shardId and timestamp added
+9. New Grafana dashboard that takes time from transactions timestamp
 
 ## Quick start
 
