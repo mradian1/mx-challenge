@@ -4,11 +4,11 @@ urls:
     - 'https://devnet-microservice.multiversx.com'
     - 'https://testnet-microservice.multiversx.com'
     - 'https://microservice.multiversx.com'
-  redis: '127.0.0.1' #'redis'
+  redis: 'redis'
 nosql:
-  host: 'localhost' #'mongodb'
+  host: 'mongodb'
 database:
-  host: 'localhost' #'database'
+  host: 'database'
   port: 3306
   username: 'root'
   password: 'root'

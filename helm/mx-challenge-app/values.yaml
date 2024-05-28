@@ -83,7 +83,7 @@ grafana:
             path: '/var/lib/grafana/dashboards/default'
   dashboardsConfigMaps:
     default: "grafana-dashboards"
-  
+
   datasources:
     prometheus.yaml:
       apiVersion: 1
@@ -93,3 +93,5 @@ grafana:
           access: 'proxy'
           url: 'http://mx-challenge-app-prometheus-server:9090'
           isDefault: true
+          jsonData:
+            timeInterval: 6s

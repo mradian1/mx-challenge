@@ -1,0 +1,109 @@
+version: '3.4'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+      target: development
+    command: npm run start:devnet:watch
+    depends_on:
+      - mongodb
+      - database
+      - redis
+    volumes:
+      - .:/usr/src/app
+      #- /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+      - '3005:3005'
+      - '4000:4000'
+  cache-warmer:
+    build:
+      context: .
+      dockerfile: ./apps/cache-warmer/Dockerfile
+      target: development
+    command: npm run start:cache-warmer:devnet:watch
+    depends_on:
+      - mongodb
+      - database
+      - redis
+    volumes:
+      - .:/usr/src/app
+      #- /usr/src/app/node_modules
+    ports:
+      - '5201:5201'
+
+  queue-worker:
+    build:
+      context: .
+      dockerfile: ./apps/queue-worker/Dockerfile
+      target: development
+    command: npm run start:queue-worker:devnet:watch
+    depends_on:
+      - mongodb
+      - database
+      - redis
+    volumes:
+      - .:/usr/src/app
+      #- /usr/src/app/node_modules
+    ports:
+      - '8000:8000'
+
+  transactions-processor:
+    build:
+      context: .
+      dockerfile: ./apps/transactions-processor/Dockerfile
+      target: development
+    command: npm run start:transactions-processor:devnet:watch
+    depends_on:
+      - mongodb
+      - database
+      - redis
+    volumes:
+      - .:/usr/src/app
+      #- /usr/src/app/node_modules
+    ports:
+      - '5202:5202'
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+  database:
+    image: "mysql:latest"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=example
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGODB_DATABASE="example"
+    ports:
+      - 27017:27017
+
+  prometheus:
+    image: prom/prometheus:latest
+    command: '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - ./monitoring/prometheus:/etc/prometheus
+    ports:
+      - 9090:9090
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  grafana:
+    depends_on:
+      - prometheus
+    image: grafana/grafana:latest
+    volumes:
+      - ./monitoring/grafana:/etc/grafana/provisioning
+    ports:
+      - 3010:3000

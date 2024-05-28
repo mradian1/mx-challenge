@@ -13,7 +13,7 @@ spec:
       targetPort: 4000
     - name: public-api
       protocol: TCP
-      port: 80
+      port: 3000
       targetPort: 3000
     - name: websocket
       protocol: TCP

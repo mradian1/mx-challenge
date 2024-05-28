@@ -1,14 +1,11 @@
 import { CacheService } from '@multiversx/sdk-nestjs-cache';
 import { Locker } from '@multiversx/sdk-nestjs-common';
-import { TransactionProcessor } from '@multiversx/sdk-transaction-processor';
+//import { TransactionProcessor } from '@multiversx/sdk-transaction-processor';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import {
-  ApiConfigService,
-  //ApiMetricsService,
-  CacheInfo,
-} from '@mvx-monorepo/common';
+import { ApiConfigService, CacheInfo } from '@mvx-monorepo/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { TransactionProcessor } from '@mradian1/sdk-transaction-processor-branch';
 
 @Injectable()
 export class TransactionProcessorService {
@@ -36,20 +33,25 @@ export class TransactionProcessorService {
         onTransactionsReceived: async (
           shardId,
           nonce,
+          round,
+          timestamp,
           transactions,
           statistics,
+          _blockHash,
         ) => {
-          const totalValue: number = transactions
-            .map((transaction) => parseInt(transaction.value))
+          const totalValue: bigint = transactions
+            .map((transaction) => transaction.sourceShard == shardId ?BigInt(transaction.value) : BigInt(0))
             .reduce((a, b) => a + b);
+
           this.logger.log(
-            `Received ${transactions.length} transactions of value ${totalValue} on shard ${shardId} and nonce ${nonce}. Time left: ${statistics.secondsLeft}`,
+            `Received ${transactions.length} transactions of value ${totalValue} = ${this.toEgld(totalValue,8)}egld on shard ${shardId} and nonce ${nonce}. Time stamp: ${timestamp} - round: ${round}, time left: ${statistics.secondsLeft} sec`,
           );
-          //await this.metricsService.setTransactionsValue(shardId, totalValue);
+
           this.client.emit('onTransactions', {
             length: transactions.length,
-            value: totalValue,
+            value: this.toEgld(totalValue,8), //totalValue,
             shardId: shardId,
+            timestamp: timestamp,
           });
         },
         getLastProcessedNonce: async (shardId) => {
@@ -67,4 +69,10 @@ export class TransactionProcessorService {
       });
     });
   }
+  toEgld(bigIntVal: bigint, precision: number): number {
+    const divisor = 10**precision;
+    const convertToEgld: bigint = BigInt (10 ** 18);
+    return Number((bigIntVal*BigInt(divisor)/convertToEgld))/divisor;
+  }
 }
+

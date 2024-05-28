@@ -25,6 +25,7 @@ export class PubSubListenerController {
       `Transactions Received with payload '${JSON.stringify(payload)}'`,
     );
     await this.metricsService.setTransactionsValue(payload.shardId, payload.value);
+    await this.metricsService.setTrxTimestampValue(payload.shardId, payload.timestamp, payload.value);
     //await this.metricsService.doNothing();
   }
 }

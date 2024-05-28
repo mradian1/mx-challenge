@@ -2,12 +2,22 @@
 
 ## Changes made
 
+v1
+
 1. Transaction-processor: onTransactionReceived emits an event that communicates the shard_id and transactions value
 2. PubSub: added event route for transactions, that passes the values received to the ApiMetrics
 3. ApiMetrics: added a transactions gauge and its set function. getMetrics will reset the gauge in order not to persist old data when no transactions are received for that shard.
 4. Config: added host settings for mongodb and respective get function in order to be able to set it independently in deployment mode.
    Also added the possibility to read all relevant config values from env variables, as they are passed as such in deployment mode
 5. Deployment (work in progress) executed through helm charts. Grafana doesn't, as yet, load json file for predefined dashboard, but data can be visualised by creating a new dashboard.
+
+v2
+6. Added api url in swagger url options in order to be able to test api routes
+7. Modified TransactionProcessor:
+   a. value is now expressed in egld
+   b. cross shard transactions (sourceShard is not current shard) are ignored in order to avoid doubling the data.
+   c. transaction processor is imported from the mradian1/sdk-transaction-processor repository - branch timestamp, which now provides timestamp and round as parameters to onTransactionReceived
+8. Modified getMetrics - clearGauge() function resets gauge values to 0, instead of reset() which resets Gauge values to undefined
 
 ## Quick start
 

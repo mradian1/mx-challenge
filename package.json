@@ -75,6 +75,7 @@
     "copy-custom-config-cache-warmer": "cp ./apps/cache-warmer/config/config.custom.yaml ./apps/cache-warmer/config/config.yaml"
   },
   "dependencies": {
+    "@mradian1/sdk-transaction-processor-branch": "github:mradian1/mx-sdk-transaction-processor#timestamp",
     "@multiversx/sdk-core": "^12.15.0",
     "@multiversx/sdk-nestjs-auth": "3.1.2",
     "@multiversx/sdk-nestjs-cache": "3.1.2",
@@ -103,11 +104,13 @@
     "cache-manager": "^5.2.1",
     "cookie-parser": "^1.4.6",
     "cron": "^3.1.6",
+    "date-fns": "^3.6.0",
     "ioredis": "^5.3.2",
     "jsonwebtoken": "^9.0.0",
     "module-alias": "^2.2.3",
     "mongodb": "^5.5.0",
     "mongoose": "^7.1.1",
+    "mx-sdk-transaction-processor-timestamp": "github:mradian1/mx-sdk-transaction-processor#timestamp",
     "mysql2": "^3.3.1",
     "nest-winston": "^1.9.2",
     "prom-client": "^14.2.0",

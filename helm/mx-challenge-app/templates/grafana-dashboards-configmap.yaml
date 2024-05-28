@@ -8,5 +8,8 @@ metadata:
 data:
   transactions.json:  |
 {{ .Files.Get "dashboards/transactions.json" | indent 4 }}
+  transactions_v2.json:  |
+{{ .Files.Get "dashboards/transactions_v2.json" | indent 4 }}
   template_service_dashboard.json: |
 {{ .Files.Get "dashboards/template_service_dashboard.json" | indent 4 }}
+  

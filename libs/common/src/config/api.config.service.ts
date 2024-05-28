@@ -23,6 +23,12 @@ export class ApiConfigService {
     return swaggerUrls;
   }
 
+  getLocalSwaggerUrl(): string {
+    if(process.env.LOCAL_URL)
+      return process.env.LOCAL_URL;
+    return 'http://localhost:3000';
+  }
+
   getRedisUrl(): string {
     if(process.env.REDIS_URL)
       return process.env.REDIS_URL;

@@ -26,12 +26,12 @@ spec:
           env:
             - name: NODE_ENV
               value: 'production'
-            - name: NODE_ENV
-              value: 'production'
             - name: NOSQL_HOST
               value: mx-challenge-app-mongodb
             - name: DATABASE_HOST
               value: mx-challenge-app-mysql
             - name: REDIS_URL
               value: mx-challenge-app-redis-headless
+            - name: LOCAL_URL
+              value: http://api-service.default.svc.cluster.local:3000
 

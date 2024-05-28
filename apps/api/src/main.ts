@@ -72,6 +72,7 @@ async function bootstrap() {
   for (const apiUrl of apiUrls) {
     documentBuilder = documentBuilder.addServer(apiUrl);
   }
+  documentBuilder.addServer(apiConfigService.getLocalSwaggerUrl());
 
   const config = documentBuilder.build();
 
